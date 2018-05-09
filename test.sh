@@ -40,7 +40,9 @@ function test-end() {
             echo ${TEST_CMD} failed:
             echo ${CMD} with args \"${ARGS}\" expected exit code ${EXPECTED} but got ${RES}
         done
+				exit 1
     else
         echo "All tests in $1 suite passed =D"
+				exit 0
     fi
 }
