@@ -9,19 +9,22 @@ the expect function can test for return values from a function:
 
 `expect <function> [arg..N] <expected_exit_code (default: 0)>`
 
-examples:
+_**examples:**_
 ```
 expect echo 0 1 foo bar buzz 0
-# passes - echo 0 1 foo bar buzz will exit with a 0 exit code
+# passes - exit code will be 0
+
 expect my-important-function "a-amazing-variable"
-# passes if my-important-function is successful (note the omission of the expected status code)
+# passes if my-important-function is successful 
+# (note the omission of the expected status code)
 ```
 
 it can also test for variable equality:
 
 `expect <variable> <expected_value (default: "")>`
 
-examples:
+_**examples:**_
+
 ```
 expect $(echo "foo") "foo"
 # passes
