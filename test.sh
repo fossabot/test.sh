@@ -15,7 +15,8 @@ function test-start() {
     darwin) START=$(darwin-now);;
     *) START="$(date +%s%N)";;
   esac
-	echo "started \"$1\" test suite"
+  SUITE_NAME="$1"
+	echo "starting \"$SUITE_NAME\" test suite"
 }
 
 function expect() {
@@ -83,7 +84,9 @@ function test-end() {
         done
 				exit 1
     else
-        echo "All tests in \"$1\" suite passed =D"
+        echo "All tests in \"$SUITE_NAME\" suite passed =D"
 				exit 0
     fi
 }
+
+trap test-end EXIT

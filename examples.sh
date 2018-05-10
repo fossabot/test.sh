@@ -3,7 +3,6 @@
 # import test.sh
 . test.sh
 
-
 test-start 'example-test-suite'
 
 # Call expect plain
@@ -32,12 +31,11 @@ contains "foo" "f"
 contains "foo" "f"; expect $?
 # will assert that the contains returns a 0 exit code
 
-# Get funky
-[ 1 -eq 0 ]; expect $? 1
+# Get funky expect 1 to not equal 0:
+[ 1 -eq 0 ]; expect $([ $? -eq 1 ]) 0
 
 [ "foo" = "foo" ]; expect $?
 
 # Or even 
 curl -Ss https://google.com > /dev/null; expect $?
 
-test-end 'example-test-suite'
