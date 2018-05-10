@@ -8,7 +8,7 @@ will start a timer for monitoring tests, takes a single argument, which is the n
 
 #### expect
 
-the expect function can test for exit codes:
+the `expect` function can test for exit codes:
 
 `expect <function> [arg..N] <expected_exit_code (default: 0)>`
 
@@ -46,8 +46,6 @@ expect 0
 ```
 
 #### test-end
-`test-end` takes a single argument:
-$1 - the name of your test suite
 
 the `test-end` call should only be made once all tests fns have finished. 
 this will echo a report to stdout that gives some detail about the suite run
