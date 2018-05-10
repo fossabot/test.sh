@@ -5,7 +5,7 @@ test.sh provides two functions: `expect` and `test-end`.
 
 #### expect
 
-the expect function can test for return values from a function:
+the expect function can test for exit codes:
 
 `expect <function> [arg..N] <expected_exit_code (default: 0)>`
 
