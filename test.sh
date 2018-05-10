@@ -6,14 +6,13 @@ FAILED=()
 
 function test-start() {
 	STARTTIME="$(date +%s%N)"
-	echo "started $1 test suite"
+	echo "started \"$1\" test suite"
 }
 
 function expect() {
     (( TESTS_RAN++ ))
 		CALLING=${FUNCNAME[1]}
 		EXPECTED="${@:${#}}"
-
 
 		if [ $(type -t ${1}) ]; then
 			if [ ${#} -le 2 ]; then
@@ -64,7 +63,7 @@ function test-end() {
 		TIME="${tests_time:0:${#tests_time}-9}.${tests_time:${#tests_time}-9:3}s"
     # create a report
     FAILED_TESTS=${#FAILED[@]}
-    echo -e "\ncompleted in $TIME\n$1 test suite results\n"
+    echo -e "\ncompleted in $TIME\n\"$1\" test suite results\n"
     echo "Ran ${TESTS_RAN} tests - ${FAILED_TESTS}/${TESTS_RAN} failed, ${PASSED}/${TESTS_RAN} passed"
 
     # Print trace of failed tests
@@ -75,7 +74,7 @@ function test-end() {
         done
 				exit 1
     else
-        echo "All tests in $1 suite passed =D"
+        echo "All tests in \"$1\" suite passed =D"
 				exit 0
     fi
 }
