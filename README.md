@@ -52,14 +52,14 @@ this will echo a report to stdout that gives some detail about the suite run
 and if there were any failures, gives a breakdown of the test function that
 failed, and what parameters were used when the failure happened.
 
-### Get
+#### Download
 ```bash
 wget -N https://raw.githubusercontent.com/DavidBindloss/test.sh/master/test.sh
 # or
 curl -O https://raw.githubusercontent.com/DavidBindloss/test.sh/master/test.sh
 ```
 
-### Use
+#### Use
 ```bash
 #!/usr/bin/env bash
 
@@ -78,5 +78,16 @@ my-test-fn
 # end timer and generate report
 test-end my-test-suite
 
+```
+
+#### Output
+```bash
+started my-test-suite test suite
+..
+completed in 0.000s
+my-test-suite test suite results
+
+Ran 2 tests - 0/2 failed, 2/2 passed
+All tests in my-test-suite suite passed =D
 ```
 
