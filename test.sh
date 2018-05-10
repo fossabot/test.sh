@@ -9,17 +9,11 @@ function test-start() {
 	echo "started \"$1\" test suite"
 }
 
-function contains() {
-    [[ "$1" != *"$2"* ]] && echo 1 || :
-    expect $? 0
-}
-
 function expect() {
     (( TESTS_RAN++ ))
-    CALLING=${FUNCNAME[1]}
+    CALLING=${FUNCNAME[${#FUNCNAME[@]}-2]}
     EXPECTED="${@:${#}}"
-
-    if [ $(type -t "${1}") ]; then
+    if [ $(type -t "$1") ]; then
         if [ ${#} -le 2 ]; then
             EXPECTED=0
             ARGS=$2
@@ -56,6 +50,10 @@ function expect() {
                 printf F
         fi
     fi
+}
+
+function contains() {
+    [[ $1 != *$2* ]] && exit 1 || :
 }
 
 function test-end() {
