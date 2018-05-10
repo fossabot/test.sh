@@ -69,9 +69,7 @@ function contains() {
 function test-end() {
     # create a report
     END=$(darwin-now)
-    local tests_time="$( \
-        printf "%010d" "$(( ${END/%N/000000000} 
-                            - ${START/%N/000000000} ))")" 
+    local tests_time="$(printf "%010d" "$(( ${END/%N/000000000} - ${START/%N/000000000} ))")"
     echo -e "\ncompleted tests in ${tests_time:0:${#tests_time}-9}.${tests_time:${#tests_time}-9:3}s"
     FAILED_TESTS=${#FAILED[@]}
     echo -e "\nRan ${TESTS_RAN} tests - ${FAILED_TESTS}/${TESTS_RAN} failed, ${PASSED}/${TESTS_RAN} passed"
