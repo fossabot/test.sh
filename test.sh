@@ -4,9 +4,19 @@ TESTS_RAN=0
 PASSED=0
 FAILED=()
 
+darwin-now() {
+  echo "$(python -c 'import time; print "%.9f" % time.time()')" | sed 's/\.//g'
+}
+
 function test-start() {
-	START_TIME="$(date +%s%N)"
-	echo "started \"$1\" test suite"
+  # What env are we in?
+  OS=$(echo $OSTYPE | sed 's/[[:digit:]]//g')
+  case "$OS" in
+    darwin) START=$(darwin-now);;
+    *) START="$(date +%s%N)";;
+  esac
+  SUITE_NAME="$1"
+	echo "starting \"$SUITE_NAME\" test suite"
 }
 
 function expect() {
@@ -34,11 +44,11 @@ function expect() {
         fi
     else
         if [ ${#} -eq 1 ]; then
-            EXPECTED=''
+            EXPECTED=0
         fi
         # Assume it's a plain equality check
         # in this case we will only have two args: Expected and Result
-        if [ "$1" -eq "$2" ] 2>/dev/null|| [ "$1" = "$2" ] 2>/dev/null; then
+        if [ "$1" -eq "$EXPECTED" ] 2>/dev/null|| [ "$1" = "$EXPECTED" ] 2>/dev/null; then
                 (( PASSED++ ))
                 printf .
         else
@@ -57,15 +67,14 @@ function contains() {
 }
 
 function test-end() {
-    END_TIME="$(date +%s%N)"
-    # required visible decimal place for seconds (leading zeros if needed)
-    TEST_TIME=$(printf "%010d" "$(( ${END_TIME/%N/000000000} - ${START_TIME/%N/000000000} ))") # in ns
-    TIME="${TEST_TIME:0:${#TEST_TIME}-9}.${TEST_TIME:${#TEST_TIME}-9:3}s"
-
     # create a report
+    END=$(darwin-now)
+    local tests_time="$( \
+        printf "%010d" "$(( ${END/%N/000000000} 
+                            - ${START/%N/000000000} ))")" 
+    echo -e "\ncompleted tests in ${tests_time:0:${#tests_time}-9}.${tests_time:${#tests_time}-9:3}s"
     FAILED_TESTS=${#FAILED[@]}
-    echo -e "\ncompleted in $TIME\n\"$1\" test suite results\n"
-    echo "Ran ${TESTS_RAN} tests - ${FAILED_TESTS}/${TESTS_RAN} failed, ${PASSED}/${TESTS_RAN} passed"
+    echo -e "\nRan ${TESTS_RAN} tests - ${FAILED_TESTS}/${TESTS_RAN} failed, ${PASSED}/${TESTS_RAN} passed"
 
     # Print trace of failed tests
     if [ ${FAILED_TESTS} -gt 0 ]; then
@@ -75,7 +84,9 @@ function test-end() {
         done
 				exit 1
     else
-        echo "All tests in \"$1\" suite passed =D"
+        echo "All tests in \"$SUITE_NAME\" suite passed =D"
 				exit 0
     fi
 }
+
+trap test-end EXIT
