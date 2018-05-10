@@ -1,7 +1,10 @@
 # test.sh
 Tiny expect library for unit testing bash scripts
 
-test.sh provides two functions: `expect` and `test-end`.
+test.sh provides three functions: `test-start`, `expect` and `test-end`.
+
+#### test-start
+will start a timer for monitoring tests, takes a single argument, which is the name of your test suite
 
 #### expect
 
@@ -42,6 +45,7 @@ expect 0
 # Caveat - the default check is against an empty string so this will fail.
 ```
 
+#### test-end
 `test-end` takes a single argument:
 $1 - the name of your test suite
 
@@ -65,12 +69,15 @@ curl -O https://raw.githubusercontent.com/DavidBindloss/test.sh/master/test.sh
 
 my-test-fn() {
   expect echo "0" 0
-  expect echo "1" 1
+  expect echo "1" 0
 }
+# start timer
+test-end my-test-suite
 
 my-test-fn
 # more fns...
 
+# end timer and generate report
 test-end my-test-suite
 
 ```
