@@ -9,8 +9,14 @@ function expect() {
 		CALLING=${FUNCNAME[1]}
 		EXPECTED="${@:${#}}"
 
+
 		if [ $(type -t ${1}) ]; then
-			ARGS=(${@:2:${#}-2})
+			if [ ${#} -le 2 ]; then
+				EXPECTED=0
+				ARGS=$2
+			else
+				ARGS=(${@:2:${#}-2})
+			fi
 			RESULT=$($1 $ARGS)
 			if [[ "$RESULT" -eq "$EXPECTED" ]]; then
 					(( PASSED++ ))
@@ -22,16 +28,19 @@ function expect() {
 					FAILED+=("\t$FILENAME: ($CALLING:$LINE_NO) \"$1\" returned $RESULT, expected $EXPECTED")
 			fi
 		else
+			if [ ${#} -eq 1 ]; then
+				EXPECTED=''
+			fi
 			# Assume it's a plain equality check
 			# in this case we will only have two args: Expected and Result
-			if [[ "$1" -eq "$2" ]] || [[ "$1" == "$2" ]]; then
+			if [ "$1" -eq "$2" ] 2>/dev/null|| [ "$1" = "$2" ] 2>/dev/null; then
 					(( PASSED++ ))
 			else
 					# Where did the test fail?
 					CALLER=($(caller))
 					LINE_NO=${CALLER[0]}
 					FILENAME=$(echo ${CALLER[1]} | rev | cut -d'/' -f1 | rev)
-					FAILED+=("\t$FILENAME: ($CALLING:$LINE_NO) $1 is not equal to "$EXPECTED"")
+					FAILED+=("\t$FILENAME: ($CALLING:$LINE_NO) \"$1\" is not equal to \"$EXPECTED\"")
 			fi
 		fi	
 }
