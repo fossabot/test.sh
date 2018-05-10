@@ -70,7 +70,7 @@ my-test-fn() {
   expect echo "1" 0
 }
 # start timer
-test-end my-test-suite
+test-start my-test-suite
 
 my-test-fn
 # more fns...
