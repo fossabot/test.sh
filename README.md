@@ -3,12 +3,41 @@ Tiny expect library for unit testing bash scripts
 
 test.sh provides two functions: `expect` and `test-end`.
 
-`expect` takes three arguments:
-$1 - command to be called
-$2 - an argument
-$3 - the expected exit code
+#### expect
 
-each `expect` call stores the functions exit code and whether the exit code matched the expected code.
+the expect function can test for return values from a function:
+
+`expect <function> [arg..N] <expected_exit_code (default: 0)>`
+
+examples:
+```
+expect echo 0 1 foo bar buzz 0
+# passes - echo 0 1 foo bar buzz will exit with a 0 exit code
+expect my-important-function "a-amazing-variable"
+# passes if my-important-function is successful (note the omission of the expected status code)
+```
+
+it can also test for variable equality:
+
+`expect <variable> <expected_value (default: "")>`
+
+examples:
+```
+expect $(echo "foo") "foo"
+# passes
+
+expect "foo" "fuzz"
+# fails - "foo" is not equal to "fuzz"
+
+expect 0 0
+# passes
+
+expect 0 1
+# fails - 0 != 1
+
+expect 0
+# Caveat - the default check is against an empty string so this will fail.
+```
 
 `test-end` takes a single argument:
 $1 - the name of your test suite
