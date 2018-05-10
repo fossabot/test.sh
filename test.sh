@@ -18,14 +18,15 @@ function expect() {
 				ARGS=(${@:2:${#}-2})
 			fi
 			RESULT=$($1 $ARGS)
-			if [[ "$RESULT" -eq "$EXPECTED" ]]; then
+			RESULT_EXIT_CODE=$?	
+			if [[ "$RESULT_EXIT_CODE" -eq "$EXPECTED" ]]; then
 					(( PASSED++ ))
-					PASSED+=("$CALLING" "$1" "${ARGS[@]}" "$EXPECTED" "$RESULT")
+					PASSED+=("$CALLING" "$1" "${ARGS[@]}" "$EXPECTED" "$RESULT_EXIT_CODE")
 			else
 					CALLER=($(caller))
 					LINE_NO=${CALLER[0]}
 					FILENAME=$(echo ${CALLER[1]} | rev | cut -d'/' -f1 | rev)
-					FAILED+=("\t$FILENAME: ($CALLING:$LINE_NO) \"$1\" returned $RESULT, expected $EXPECTED")
+					FAILED+=("\t$FILENAME: ($CALLING:$LINE_NO) \"$1\" returned $RESULT_EXIT_CODE, expected $EXPECTED")
 			fi
 		else
 			if [ ${#} -eq 1 ]; then
