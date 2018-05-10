@@ -1,7 +1,7 @@
 # test.sh
 Tiny expect library for unit testing bash scripts
 
-test.sh provides three functions: `test-start`, `expect` and `test-end`.
+test.sh provides four functions: `test-start`, `expect`, `contains` and `test-end`.
 
 #### test-start
 will start a timer for monitoring tests, takes a single argument, which is the name of your test suite
@@ -44,6 +44,35 @@ expect 0 1
 expect 0
 # Caveat - the default check is against an empty string so this will fail.
 ```
+
+#### contains
+
+`contains` is a method which returns 0 1 if a given haystack contains a needle
+
+_**examples**_
+
+```
+contains "foobar" "f"
+# returns 0
+
+contains "foobar" "buzz"
+# returns 1
+```
+
+in order to get a test result out of a contains, you can chain it with expect
+
+```
+$(contains "foobar" "f"); expect $?
+# passes
+
+$(contains "fizz" "buzz"); expect $? 1
+# passes
+
+$(contains "fizz" "buzz"); expect $?
+# fails - the contains subshell returns an exit code of 1 and 1 != 0
+
+```
+
 
 #### test-end
 
