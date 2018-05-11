@@ -120,3 +120,5 @@ Ran 2 tests - 0/2 failed, 2/2 passed
 All tests in my-test-suite suite passed =D
 ```
 
+#### Examples
+You can run and explore the examples.sh frm any command line utility.
