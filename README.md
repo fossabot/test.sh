@@ -42,7 +42,7 @@ expect 0 1
 # fails - 0 != 1
 
 expect 0
-# Caveat - the default check is against an empty string so this will fail.
+# pass
 ```
 
 #### contains
@@ -70,7 +70,6 @@ $(contains "fizz" "buzz"); expect $? 1
 
 $(contains "fizz" "buzz"); expect $?
 # fails - the contains subshell returns an exit code of 1 and 1 != 0
-
 ```
 
 
@@ -106,7 +105,6 @@ my-test-fn
 
 # end timer and generate report
 test-end my-test-suite
-
 ```
 
 #### Output
@@ -120,3 +118,5 @@ Ran 2 tests - 0/2 failed, 2/2 passed
 All tests in my-test-suite suite passed =D
 ```
 
+#### Examples
+You can run and explore the `examples.sh`
