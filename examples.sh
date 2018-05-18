@@ -5,7 +5,7 @@
 
 test-start 'example-test-suite'
 
-# Call expect plain
+# Call expect plain directly
 expect "foo" "foo"
 
 function test-case() {
@@ -29,7 +29,7 @@ contains "foo" "f"
 
 # which means
 contains "foo" "f"; expect $?
-# will assert that the contains returns a 0 exit code
+# will assert that the contains fn returns a 0 exit code
 
 # Get funky expect 1 to not equal 0:
 [ 1 -eq 0 ]; expect $([ $? -eq 1 ]) 0
