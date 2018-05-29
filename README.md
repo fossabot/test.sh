@@ -1,4 +1,6 @@
 # test.sh
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDavidBindloss%2Ftest.sh.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FDavidBindloss%2Ftest.sh?ref=badge_shield)
+
 Tiny expect library for unit testing bash scripts
 
 test.sh provides four functions: `test-start`, `expect`, `contains` and `test-end`.
@@ -120,3 +122,7 @@ All tests in my-test-suite suite passed =D
 
 #### Examples
 You can run and explore the `examples.sh`
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDavidBindloss%2Ftest.sh.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FDavidBindloss%2Ftest.sh?ref=badge_large)
